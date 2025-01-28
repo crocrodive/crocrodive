@@ -1,5 +1,6 @@
 <x-layout>
     <x-slot name="header">
+        <x-header/>
     </x-slot>
         <form method="POST" action="{{ route('login') }}">
         @csrf
