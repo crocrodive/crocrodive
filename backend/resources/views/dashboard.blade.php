@@ -1,13 +1,11 @@
 <x-layout>
     <div class="flex flex-row ">
        <x-sideNav/>
-        <div class="flex flex-col items-center justify-center bg-background-200"  >
-            {{-- if session is user --}}
+        <div class="flex flex-column items-center w-full h-full bg-background-200"  >
+            {{-- user type --}}
             @if (true) 
-            
+            <x-menu :menuOptions="['Passée','À venir']" />
             @endif
         <div>
     <div>
-     <x-slot name="footer">        
-    </x-slot>
 </x-layout>
