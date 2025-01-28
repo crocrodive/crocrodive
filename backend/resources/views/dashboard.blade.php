@@ -1,11 +1,11 @@
 <x-layout>
-    <x-slot name="header">
-        <x-header/>
-    </x-slot>
-    <div class="flex flex-row">
-        <div class="bg-background-100 w-full h-screen max-w-64">
-        </div>
-        <div class="flex flex-col items-center justify-center gap-8 bg-background-200 h-screen w-screen" >
+    <div class="flex flex-row ">
+       <x-sideNav/>
+        <div class="flex flex-col items-center justify-center bg-background-200"  >
+            {{-- if session is user --}}
+            @if (true) 
+            
+            @endif
         <div>
     <div>
      <x-slot name="footer">        

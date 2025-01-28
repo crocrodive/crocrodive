@@ -7,11 +7,15 @@
     <title>Document</title>
     @vite(entrypoints: 'resources/css/app.css')
 </head>
-{{ $header }}
-<body>
-    <div class="flex flex-col items-center justify-center gap-8 h-screen bg-background-200" >
+<body class="flex flex-col items-center justify-center bg-background-200 h-screen">
+    <header class="flex flex-row w-screen  items-center justify-between bg-background-100  z-10">
+        <x-header/>
+    </header>
+    <main class="w-full">
     {{ $slot }}
-    <div>
+    <main>
+    <footer>
+        {{ $footer }}
+    </footer>
 </body>
-{{ $footer }}
 </html>
