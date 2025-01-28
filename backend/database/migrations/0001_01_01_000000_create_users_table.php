@@ -6,17 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    public const TABLE_NAME = 'users';
+    public const TABLE_PREFIX = 'user_';
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
+            $table->uuid(self::TABLE_PREFIX . 'id')->primary();
+            $table->char('role_id', 36); // Assurez-vous que la taille correspond
+            $table->unsignedBigInteger('leve_id'); // Colonne non signée pour correspondre à la clé étrangère
+            $table->string(self::TABLE_PREFIX . 'lastname');
+            $table->string(self::TABLE_PREFIX . 'firstname');
+            $table->string(self::TABLE_PREFIX . 'telephone');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string(self::TABLE_PREFIX . 'is_password_temporary');
+            $table->timestamp(self::TABLE_PREFIX . 'diploma_date')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +44,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
     }
 
     /**
@@ -42,7 +52,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists(self::TABLE_NAME);
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
