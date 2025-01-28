@@ -20,6 +20,12 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         $isLocal = $this->app->environment('local');
 
+        // Register this provider in dev only
+        if($isLocal && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
             return $isLocal ||
                    $entry->isReportableException() ||
