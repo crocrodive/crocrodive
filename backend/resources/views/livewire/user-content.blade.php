@@ -14,15 +14,33 @@
             
         </div>
     </div>
+
+    
+    @php
+    $computedSessionDetails = collect($sessionsDetails)->groupBy('sess_id')->map(function ($sessions, $sess_id) {
+        return (object) [
+            'sessionInitiatorName' => 'Default Name', // You might want to replace this with actual instructor name if available
+            'sessionDate' => \Carbon\Carbon::parse($sessions->first()->sess_date)->format('d/m/Y'),
+            'sessionUserEvaluations' => $sessions->map(function ($session) {
+                return (object) [
+                    'evaluationAbilityName' => $session->abil_label,
+                    'evaluationRating' => $session->rati_label,
+                ];
+            })->toArray(),
+        ];
+    })->values()->toArray();
+    @endphp
+
+
     <div class="flex flex-col h-full f-full p-8 gap-8 items-center ">
         @if($selectedOption === 'À venir')
-                @foreach ($sessionDetails as $session)
+                @foreach ($computedSessionDetails as $session)
                     @if (\Carbon\Carbon::createFromFormat('d/m/Y', $session->sessionDate)->startOfDay() >= now()->startOfDay())
                         <x-session-card :session="$session"></x-session-card>
                     @endif
                 @endforeach
         @else
-                @foreach ($sessionDetails as $session)
+                @foreach ($computedSessionDetails as $session)
                     @if (\Carbon\Carbon::createFromFormat('d/m/Y', $session->sessionDate)->startOfDay() < now()->startOfDay())
                         <x-session-card :session="$session"></x-session-card>
                     @endif

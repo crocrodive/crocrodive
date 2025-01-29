@@ -26,16 +26,15 @@ class Session extends CustomPrefixedModel
         return $this->hasMany(Evaluation::class, 'sess_id', 'sess_id');
     }
 
-    public function getSessionDetails($userId)
+    public function getUserSessionsDetails($userId)
     {
         return DB::table('croc_evaluations as ev')
             ->join('croc_abilities', 'ev.abil_id', '=', 'croc_abilities.abil_id')
             ->join('croc_ratings', 'ev.rati_id', '=', 'croc_ratings.rati_id')
             ->join('croc_sessions', 'ev.sess_id', '=', 'croc_sessions.sess_id')
             ->join('croc_diving_groups', 'ev.sess_id', '=', 'croc_diving_groups.sess_id')
-            ->select('croc_abilities.abil_label', 'croc_ratings.rati_label', 'croc_sessions.sess_date', 'croc_sessions.instructor_user_id', 'croc_sessions.sess_id')
-            ->where('croc_evaluations.user_id', $userId)
+            ->select('croc_abilities.abil_label', 'croc_ratings.rati_label', 'croc_sessions.sess_date', 'croc_diving_groups.instructor_user_id', 'croc_sessions.sess_id')
+            ->where('ev.user_id',  $userId)
             ->get()
-            ->groupBy('sess_id');
-    }
+            ->toArray();}
 }

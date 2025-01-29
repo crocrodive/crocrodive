@@ -1,4 +1,4 @@
-@props(['session' => (object) ['sessionInitiatorName' => 'Default Name', 'sessionDate' => '01/01/1970', 'sessionUserEvaluations' => [(object) ['evaluationABilityName' => 'Default Exercise', 'evaluationRating' => 'Default Level']]]])
+@props(['session' => (object) ['sessionInitiatorName' => 'Default Name', 'sessionDate' => '01/01/1970', 'sessionUserEvaluations' => [(object) ['evaluationAbilityName' => 'Default Exercise', 'evaluationRating' => 'Default Level']]]])
 <x-card>
     <div class="w-[600px] h-[180px] flex flex-col py-4 gap-4 px-32">
         <div class="flex flex-row h-fit justify-between">
