@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Town extends CustomPrefixedModel {
+    use HasFactory;
         protected $table = 'croc_towns';
 
         protected string $prefix = 'town_';
