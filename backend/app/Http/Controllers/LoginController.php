@@ -11,22 +11,23 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function create(): View
-    {
-        return view('welcome');
+    {   
+        return view('login');
     }
 
-    public function store(LoginRequest $request): RedirectResponse
+    public function authenticate(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
 
+        $request->authenticate();
+        
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended('dashboard');
     }
 
     public function destroy(): RedirectResponse
     {
-        Auth::logout();
+        auth()->logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();

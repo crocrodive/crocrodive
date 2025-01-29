@@ -56,4 +56,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        /**
+     * The attributes that should have default values.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'user_is_password_temporary' => true,
+    ];
 }

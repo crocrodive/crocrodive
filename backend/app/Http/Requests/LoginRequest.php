@@ -23,12 +23,13 @@ class LoginRequest extends FormRequest
 
     public function authenticate(): void
     {
+        
         if (!Auth::attempt(
-            $this->only('email', 'password'),
-            $this->boolean('remember')
+            $this->only('email', 'password') , true 
+            /* remembre: true is critical, else the session would be flashed at the first redirection */
         )) {
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => 'Les informations d\'identification fournies ne correspondent pas à nos enregistrements.',
             ]);
         }
     }
