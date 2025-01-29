@@ -28,4 +28,8 @@ class Course extends CustomPrefixedModel
     public function site() {
         return $this->belongsTo(Site::class, 'site_id', 'site_id');
     }
+
+    public function sessions() {
+        return $this->hasMany(Session::class, 'cour_id', 'cour_id');
+    }
 }
