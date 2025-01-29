@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class FutureSessionCard extends Component
+class SessionCard extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class FutureSessionCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.future-session-card');
+        return view('components.session-card');
     }
 }

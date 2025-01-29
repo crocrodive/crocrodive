@@ -14,9 +14,9 @@
     </div>
     <div class="h-full w-full flex flex-col gap-8 p-8 items-center">
         @if($selectedOption === 'À venir')
-            <x-future-session-card></x-session-card>
+            <x-session-card></x-session-card>
         @else
-            <x-past-session-card></x-session-card>
+            <x-session-card></x-session-card>
         @endif
     </div>
     <style>
