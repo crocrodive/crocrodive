@@ -44,7 +44,8 @@ class Session extends CustomPrefixedModel
             ->join('croc_ratings', 'ev.rati_id', '=', 'croc_ratings.rati_id')
             ->join('croc_sessions', 'ev.sess_id', '=', 'croc_sessions.sess_id')
             ->join('croc_diving_groups', 'ev.sess_id', '=', 'croc_diving_groups.sess_id')
-            ->select('croc_abilities.abil_label', 'croc_ratings.rati_label', 'croc_sessions.sess_date', 'croc_diving_groups.instructor_user_id', 'croc_sessions.sess_id')
+            ->join('users', 'croc_diving_groups.instructor_user_id', '=', 'users.user_id')
+            ->select('croc_abilities.abil_label', 'croc_ratings.rati_label', 'croc_sessions.sess_date', 'croc_diving_groups.instructor_user_id', 'croc_sessions.sess_id', 'users.user_firstname', 'users.user_lastname')
             ->where('ev.user_id',  $userId)
             ->get()
             ->toArray();}
