@@ -11,6 +11,8 @@ npm install && npm run build
 # Lancement du serveur de développement
 composer install
 
+php artisan view:clear
+php artisan config:clear
 php artisan cache:clear
 
 composer run dev
