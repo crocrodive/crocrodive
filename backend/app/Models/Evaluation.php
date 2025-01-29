@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Evaluation extends CustomPrefixedModel
 {
-    use HasUuids;
+    use HasUuids, HasFactory;
 
     protected $table = 'croc_evaluations';
     protected string $prefix = 'eval_';

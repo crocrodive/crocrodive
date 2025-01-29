@@ -23,9 +23,15 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'role_id',
+        'leve_id',
+        'user_lastname',
+        'user_firstname',
+        'user_telephone',
         'email',
         'password',
+        'user_is_password_temporary',
+        'user_diploma_date',
     ];
 
     /**
@@ -50,4 +56,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        /**
+     * The attributes that should have default values.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'user_is_password_temporary' => true,
+    ];
 }
