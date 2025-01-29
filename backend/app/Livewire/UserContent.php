@@ -88,10 +88,10 @@ class UserContent extends Component
         return $sessionDetails;
     }
    
-    // public function mount()
-    // {
-    //     $this->sessionDetails = $this->getSessionDetails();
-    // }
+    public function mount()
+    {
+        $this->sessionDetails = $this->getSessionDetails();
+    }
 
     protected $listeners = [
         'menuOptionSelected' => 'updateSelectedOption',
