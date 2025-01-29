@@ -19,7 +19,7 @@
     @php
     $computedSessionDetails = collect($sessionsDetails)->groupBy('sess_id')->map(function ($sessions, $sess_id) {
         return (object) [
-            'sessionInitiatorName' => 'Default Name', // You might want to replace this with actual instructor name if available
+            'sessionInitiatorName' => $sessions->first()->user_firstname . ' ' . $sessions->first()->user_lastname,
             'sessionDate' => \Carbon\Carbon::parse($sessions->first()->sess_date)->format('d/m/Y'),
             'sessionUserEvaluations' => $sessions->map(function ($session) {
                 return (object) [
@@ -30,7 +30,6 @@
         ];
     })->values()->toArray();
     @endphp
-
 
     <div class="flex flex-col h-full f-full p-8 gap-8 items-center ">
         @if($selectedOption === 'À venir')
