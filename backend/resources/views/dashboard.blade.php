@@ -2,11 +2,8 @@
     <div class="flex flex-row h-full w-full ">
        <x-sideNav/>
         <div class="flex flex-col items-center w-full h-full bg-background-200">
-            {{-- user type --}}
             @if (true) 
-                {{-- <x-menu :menuOptions="['Passée','À venir']" :selectedOption="$selectedOption"/> --}}
                 <livewire:user-content />
-
             @endif
         </div>
     </div>

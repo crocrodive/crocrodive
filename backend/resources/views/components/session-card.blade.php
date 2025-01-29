@@ -10,7 +10,17 @@
 
         @foreach ($session->sessionUserEvaluations as $evaluation)
         <div class="flex flex-row gap-4  items-center">
-            <div class="h-[8px] w-[8px] rounded-cards border-black border-2"></div> <div>{{$evaluation->evaluationABilityName}}</div>
+            @if(false)
+                <div class="h-[8px] w-[8px] rounded-cards bg-alert-success-100"></div> 
+            @elseif(false)
+                <div class="h-[8px] w-[8px] rounded-cards bg-alert-warning-100"></div>
+            @else
+                <div class="h-[8px] w-[8px] rounded-cards border-black border-2"></div>
+            @endif
+            <div>{{$evaluation->evaluationABilityName}}</div>
+            @if(true)
+                <div class="text-alert-warning-200">Absent(e)</div>
+            @endif
         </div>
         @endforeach
         </div>
