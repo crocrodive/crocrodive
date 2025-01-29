@@ -32,6 +32,9 @@ class User extends Authenticatable
         'password',
         'user_is_password_temporary',
         'user_diploma_date',
+        'user_address',
+        'user_birth_date',
+        'user_diving_license_number',
     ];
 
     /**

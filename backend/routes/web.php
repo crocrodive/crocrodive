@@ -28,6 +28,7 @@ Route::middleware([EnsureConnected::class])->group(function () {
 
     // Route to handle logout
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 });
 
 // Directeur technique
