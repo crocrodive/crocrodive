@@ -3,8 +3,8 @@
 namespace App\Enum;
 
 enum Roles: string {
-    case TECHNICAL_DIRECTOR = "Technical Director";
-    case COURSE_MANAGER = "Course Manager";
-    case INSTRUCTOR = "Instructor";
-    case ATTENDEE = "Attendee";
+    case TECHNICAL_DIRECTOR = "Directeur Technique";
+    case COURSE_MANAGER = "Responsable de formation";
+    case INSTRUCTOR = "Initiateur";
+    case ATTENDEE = "Élève";
 }

@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([LevelSeeder::class, RoleSeeder::class, RatingSeeder::class]);
-        User::factory(25)->create();
         Town::factory(10)->create();
+        User::factory(25)->create();
         Site::factory(10)->create();
         Course::factory(10)->create();
         Session::factory(10)->create();
