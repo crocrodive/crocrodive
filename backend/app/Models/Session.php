@@ -19,4 +19,8 @@ class Session extends CustomPrefixedModel
     public function course() {
         return $this->belongsTo(Course::class, 'cour_id', 'cour_id');
     }
+
+    public function evaluations() {
+        return $this->hasMany(Evaluation::class, 'sess_id', 'sess_id');
+    }
 }

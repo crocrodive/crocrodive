@@ -4,30 +4,29 @@
             @foreach ($menuOptions as $option)
                 <div  
                 id="{{$option}}" 
-                class="text-largeText font-poppinsSemiBold menu-item {{ $selectedOption === $option ? 'active' : '' }}"
+                class="text-largeText font-poppinsSemiBold menu-item {{ $selectedOption === $option ? 'text-purple-700 underline' : 'text-black no-underline cursor-pointer' }}"
                 wire:click.prevent="updateSelectedOption('{{ $option }}')"
                  >
                     {{$option}}
                 </div>
             @endforeach 
+
+            
         </div>
     </div>
-    <div class="h-full w-full flex flex-col gap-8 p-8 items-center">
+    <div class="flex flex-col h-full f-full p-8 gap-8 items-center ">
         @if($selectedOption === 'À venir')
-            <x-session-card></x-session-card>
+                @foreach ($sessionDetails as $session)
+                    @if (\Carbon\Carbon::createFromFormat('d/m/Y', $session->sessionDate)->startOfDay() >= now()->startOfDay())
+                        <x-session-card :session="$session"></x-session-card>
+                    @endif
+                @endforeach
         @else
-            <x-session-card></x-session-card>
+                @foreach ($sessionDetails as $session)
+                    @if (\Carbon\Carbon::createFromFormat('d/m/Y', $session->sessionDate)->startOfDay() < now()->startOfDay())
+                        <x-session-card :session="$session"></x-session-card>
+                    @endif
+                @endforeach
         @endif
     </div>
-    <style>
-        .menu-item {
-            color: #000000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .menu-item.active {
-            color: #6534CD;
-            text-decoration: underline;
-        }
-    </style>
 </div>

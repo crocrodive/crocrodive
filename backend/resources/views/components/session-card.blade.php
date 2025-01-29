@@ -8,17 +8,21 @@
         <hr class="bg-background-200 h-[2px] w-full">
         <div class="flex flex-col h-full w-full px-8">
 
+        @php
+            $evaluationColors = [
+                'acquise' => 'bg-alert-success-100',
+                'en cours d\'acquisition' => 'bg-alert-warning-100',
+                'non évaluée' => 'border-black border-2',
+                'absent' => 'bg-alert-danger-100',
+                'default' => 'border-black border-2'
+            ];
+        @endphp
+
         @foreach ($session->sessionUserEvaluations as $evaluation)
-        <div class="flex flex-row gap-4  items-center">
-            @if(false)
-                <div class="h-[8px] w-[8px] rounded-cards bg-alert-success-100"></div> 
-            @elseif(false)
-                <div class="h-[8px] w-[8px] rounded-cards bg-alert-warning-100"></div>
-            @else
-                <div class="h-[8px] w-[8px] rounded-cards border-black border-2"></div>
-            @endif
-            <div>{{$evaluation->evaluationABilityName}}</div>
-            @if(true)
+        <div class="flex flex-row gap-4 items-center">
+            <div class="h-[8px] w-[8px] rounded-cards {{ $evaluationColors[$evaluation->evaluationRating] ?? $evaluationColors['default'] }}"></div>
+            <div>{{$evaluation->evaluationAbilityName}}</div>
+            @if($evaluation->evaluationRating == 'absent')
                 <div class="text-alert-warning-200">Absent(e)</div>
             @endif
         </div>

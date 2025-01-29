@@ -1,8 +1,7 @@
 <?php
+namespace App\Http\Controllers;
 
-namespace App\Livewire;
-
-use Livewire\Component;
+use Illuminate\Http\Request;
 use App\Models\UserCourse;
 use App\Models\Session;
 use App\Models\Evaluation;
@@ -13,12 +12,10 @@ use App\Models\DivingGroup;
 use App\Models\User;
 use Carbon\Carbon;
 
-class UserContent extends Component
+
+
+class SessionController extends Controller
 {
-    public $sessionDetails;
-    public $menuOptions = ['Passée', 'À venir' ];
-    public $selectedOption = 'À venir'; // Option par défaut
-    
     public function getSessionDetails()
     {
         $userCoursesAttributes = UserCourse::all()[0]->getAttributes();
@@ -86,24 +83,5 @@ class UserContent extends Component
         }
 
         return $sessionDetails;
-    }
-   
-    public function mount()
-    {
-        $this->sessionDetails = $this->getSessionDetails();
-    }
-
-    protected $listeners = [
-        'menuOptionSelected' => 'updateSelectedOption',
-    ];
-
-    public function updateSelectedOption($option)
-    {
-        $this->selectedOption = $option;
-    }
-
-    public function render()
-    {
-        return view('livewire.user-content');
     }
 }
