@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * Record to link users and diving groups.
+ * @see DivingGroup
+ */
 class UserGroup extends Pivot
 {
     use HasUuids;

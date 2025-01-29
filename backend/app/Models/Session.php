@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * A diving session ("séance" in french) of a course.
+ *
+ * Sessions last a few hours, they involve attendees and instructors.
+ *
+ * Sessions for a particular course always take place in the same location.
+ * The diving location is defined in the course.
+ *
+ * @property string $id Identifier for the session (UUIDv4)
+ * @property \DateTime $date Date and time of the session
+ */
 class Session extends CustomPrefixedModel
 {
     use HasUuids, HasFactory;

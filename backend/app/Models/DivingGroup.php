@@ -5,6 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Group of one instructor and a few attendees (usually two)
+ * for a diving session.
+ *
+ * The course manager is responsible for creating them
+ * for every session, that is assign attendees to instructors for
+ * one session.
+ *
+ * @property string $id Identifier for the group (UUIDv4)
+ */
 class DivingGroup extends CustomPrefixedModel
 {
     use HasUuids, HasFactory;

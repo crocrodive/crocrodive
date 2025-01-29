@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Record to store participation of users to courses.
+ *
+ * This is for attendees and instructors, but the manager is handled 
+ * with a foreign key in the course table.
+ */
 class UserCourse extends Model
 {
     use HasUuids;

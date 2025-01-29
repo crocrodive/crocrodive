@@ -4,6 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
+/**
+ * The FFESSM define skills ("compétences" in french) that must be acquired for each level.
+ *
+ * Skills are themselves divided into abilities ("aptitudes" in french).
+ *
+ * An attendee validates a skill by validating each of its abilities.
+ *
+ * @property string $id Identifier for the skill (UUIDv4)
+ * @property string $label Official text for the skill
+ */
 class Skill extends CustomPrefixedModel
 {
     use HasUuids;

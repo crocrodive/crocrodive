@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * A record to store the abilities acquired by a user.
+ *
+ * If there is a record with user Tom and ability "Dive in the sea",
+ * that means that Tom has validated this ability this year.
+ * @see Ability
+ */
 class UserAcquiredAbility extends Model
 {
     Use HasUuids;

@@ -5,6 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * A diving course for the current year ("formation" in french).
+ *
+ * A diving course has a manager, and a team of instructors.
+ *
+ * Each course focus on a specific level of certification.
+ *
+ * Each year, the technical director of the club defines the courses
+ * that will be organized.
+ *
+ * @property string $id Identifier for the course (UUIDv4)
+ * @property \Date $start_date Date of the beginning of the course
+ */
 class Course extends CustomPrefixedModel
 {
     use HasUuids, HasFactory;
