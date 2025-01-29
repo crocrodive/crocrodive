@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot name="header">
     </x-slot>
+    <div class="flex flex-col items-center justify-center h-full w-full">
         <form method="POST" action="{{ route('login_post') }}">
         @csrf
             <x-card>
@@ -21,7 +22,5 @@
                 </div>
             </x-card>
         </form>
-     <x-slot name="footer">        
-    </x-slot>
-    <div>
+    </div>
 </x-layout>
