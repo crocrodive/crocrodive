@@ -19,9 +19,9 @@
         @endphp
 
         @foreach ($session->sessionUserEvaluations as $evaluation)
-        <div class="flex flex-row gap-4 items-center">
+        <div class="flex flex-row gap-4 items-baseline">
             <div class="h-[8px] w-[8px] rounded-cards {{ $evaluationColors[$evaluation->evaluationRating] ?? $evaluationColors['default'] }}"></div>
-            <div>{{$evaluation->evaluationAbilityName}}</div>
+            <div >{{$evaluation->evaluationAbilityName}}</div>
             @if($evaluation->evaluationRating == 'absent')
                 <div class="text-alert-warning-200">Absent(e)</div>
             @endif
