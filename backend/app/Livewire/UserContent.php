@@ -15,7 +15,7 @@ use Carbon\Carbon;
 
 class UserContent extends Component
 {
-    public $sessionDetails;
+    public $sessionDetails = [];
     public $menuOptions = ['Passée', 'À venir' ];
     public $selectedOption = 'À venir'; // Option par défaut
     
@@ -88,10 +88,10 @@ class UserContent extends Component
         return $sessionDetails;
     }
    
-    public function mount()
-    {
-        $this->sessionDetails = $this->getSessionDetails();
-    }
+    // public function mount()
+    // {
+    //     $this->sessionDetails = $this->getSessionDetails();
+    // }
 
     protected $listeners = [
         'menuOptionSelected' => 'updateSelectedOption',

@@ -12,7 +12,7 @@ class LoginController extends Controller
 {
     public function create(): View
     {   
-        return view('login');
+        return view('welcome');
     }
 
     public function authenticate(LoginRequest $request): RedirectResponse
