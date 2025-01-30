@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Middleware\EnsureConnected;
 use App\Http\Middleware\EnsureGuest;
 use App\Http\Middleware\EnsureTechnicalDirector;
@@ -37,3 +38,4 @@ Route::middleware([EnsureTechnicalDirector::class])->group(function () {
     Route::post('/create_user', [CreateUserController::class, 'create'])->name('create_user');
 });
 
+Route::post('/api/login', [ApiUserController::class, 'login']);

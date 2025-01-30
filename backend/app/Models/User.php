@@ -3,11 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
+#[ApiResource(
+    operations: [
+        new Post(uriTemplate: '/login'),
+        new Get(uriTemplate: '/users/me'),
+    ]
+)]
 /**
  * A user of the application.
  *
@@ -34,7 +44,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, Notifiable, HasUuids, HasApiTokens;
 
     protected $table = 'users';
 
@@ -61,6 +71,16 @@ class User extends Authenticatable
         'user_city',
         'user_birth_date',
         'user_diving_license_number',
+    ];
+
+    protected $visible = [
+        'user_id',
+        'role_id',
+        'leve_id',
+        'user_lastname',
+        'user_firstname',
+        'user_telephone',
+        'email',
     ];
 
     /**
