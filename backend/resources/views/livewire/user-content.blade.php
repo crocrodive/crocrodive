@@ -30,8 +30,7 @@
         ];
     })->values()->toArray();
     @endphp
-
-    <div class="flex flex-col h-full f-full p-8 gap-8 items-center ">
+    <div class="flex flex-col h-full f-full p-8 gap-8 items-center">
         @if($selectedOption === 'À venir')
                 @foreach ($computedSessionDetails as $session)
                     @if (\Carbon\Carbon::createFromFormat('d/m/Y', $session->sessionDate)->startOfDay() >= now()->startOfDay())

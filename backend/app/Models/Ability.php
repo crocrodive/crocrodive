@@ -22,9 +22,24 @@ class Ability extends CustomPrefixedModel
 
     protected $fillable = [
         'abil_label',
+        'skil_id',
     ];
 
     public function skill() {
         return $this->belongsTo(Skill::class, 'skil_id', 'skil_id');
+    }
+    public function getAbilitiesFromSkill($skillId) {
+        return $this->where('skil_id', $skillId)->get();
+    }
+    public function createAbility($data) {
+        return self::create($data);
+    }
+    public function getAbilitiesFromSkillLabel($skillId)
+    {
+        return $this->join('croc_skills', 'croc_abilities.skil_id', '=', 'croc_skills.skil_id')
+                    ->where('croc_skills.skil_id', $skillId)
+                    ->select('croc_abilities.abil_label', 'croc_abilities.abil_id')
+                    ->get()
+                    ->toArray();
     }
 }
