@@ -34,10 +34,12 @@ class UserFactory extends Factory
             "password"=> Hash::make("temp"),
             "user_is_password_temporary" => true,
             "user_diploma_date" => $this->faker->date(),
-            "town_insee" => \App\Models\Town::inRandomOrder()->first()['town_insee'],
+            "user_postal_code" => $this->faker->postcode(),
+            "user_city" => $this->faker->city(),
             "user_address" => $this->faker->address(),
             "user_birth_date" => $this->faker->date(),
-            "user_diving_license_number" => $this->faker->regexify('[A-Z]-(\d){2}-(\d){6}'),
+            "user_diving_license_number" => $this->faker->regexify('A-(\d){2}-(\d){6}'),
+            "user_medical_cert_date" => $this->faker->date(),
         ];
     }
 
