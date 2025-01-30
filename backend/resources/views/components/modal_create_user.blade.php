@@ -1,0 +1,67 @@
+<div class="w-full max-w-4xl p-4 max-h-screen overflow-y-auto scrollbar-hidden">
+    <form action="{{ route('create_user') }}" method="POST" class="space-y-4">
+        @csrf
+        <!-- Header avec croix -->
+        <div class="flex items-center justify-between mb-6">
+            <p class="text-h4">Ajouter un membre</p>
+            <img src="{{asset('images/croix.png')}}" class="rotate-45 w-4 h-4 cursor-pointer" wire:click="fermerModal" alt="Fermer">    
+        </div>
+
+        <!-- Champs de formulaire -->
+        <div class="space-y-3">
+            <x-input_create_user model="m_lastname" type="text" name="lastname" placeholder="Nom" required="true" />
+            <x-input_create_user model="m_firstname" type="text" name="firstname" placeholder="Prénom" required="true" />
+            <x-input_create_user model="m_phone" type="text" name="phone" placeholder="Téléphone" required="true" />
+            <x-input_create_user model="m_email" type="email" name="email" placeholder="Email" required="true" />
+            <x-input_create_user model="m_zipcode" type="text" name="zipcode" placeholder="Code postal" required="true" />
+            <x-input_create_user model="m_city" type="text" name="city" placeholder="Ville" required="true" />
+            <x-input_create_user model="m_address" type="text" name="address" placeholder="Adresse" required="true" />
+            <label class="block text-sm font-medium text-gray-700 mb-1" for="certif">Certificat médical</label>
+            <x-input_create_user model="m_certif" type="date" name="certif" placeholder="Certificat médical" required="true" />
+            <label class="block text-sm font-medium text-gray-700 mb-1" for="certif">Date naissance</label>
+            <x-input_create_user model="m_birthdate" type="date" name="birthdate" placeholder="Date de naissance" required="true" />
+            <x-input_create_user model="m_licence" type="text" name="licence" placeholder="N° de lincence" required="true" />
+            @error('licence')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
+
+            <!-- Selects -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label for="level" class="block text-gray-700">Niveau :</label>
+                    <select name="level" id="level" class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-2 px-3">
+                        @foreach($levels as $level)
+                            <option value="{{ $level->id }}">{{ $level->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <div class="space-y-2">
+                    <label for="role" class="block text-gray-700">Rôle :</label>
+                    <select name="role" id="role" class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-2 px-3">
+                        @foreach($roles as $role)
+                            <option value="{{ $role }}">{{ $role }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton -->
+        <div class="mt-6">
+            <x-button class="w-full"> Enregistrer </x-button>
+        </div>
+    </form>
+</div>
+
+
+<style>
+    .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;  /* Pour IE et Edge */
+    scrollbar-width: none;     /* Pour Firefox */
+}
+</style>
