@@ -40,7 +40,7 @@ class CreateUserController extends Controller
             'address' => 'required',
             'licence' => [
                 'required',
-                'regex:/^[A]-\d{2}-\d{6}$/', // Validation du format licence
+                'regex:/^[aA]-\d{2}-\d{6}$/', // Validation du format licence
             ],
             'birthdate' => 'required',
             'certif' => 'required',
