@@ -10,6 +10,21 @@ use App\Enum\Roles;
 
 class AddMember extends Component
 {
+
+    /**************************
+     * Dropdown menu dependant
+    **************************/
+
+    public $levels;
+    public $roles = [Roles::ATTENDEE];
+
+    public $levelPicked;
+
+
+    /******************
+     * Variables
+     *****************/
+
     public $showModal = false;
     public $successMessage = false;  // Variable pour afficher le message de succès
 
@@ -44,11 +59,32 @@ class AddMember extends Component
         if (session('success')) {
             $this->successMessage = true;
         }
+        $this->levels = Level::all();
     }
+
+    public function updatedLevelPicked($value)
+    {
+        $level = Level::find($value);
+        
+        if ($level) {
+            $level_name = $level->name; 
+            
+            if ($level_name == "N1" || $level_name == "Débutant") {
+                $this->roles = [Roles::ATTENDEE];  
+            }
+            else if ($level_name != "N2" && $level_name != "N1" && $level_name != "Débutant"){
+                $this->roles = [Roles::INSTRUCTOR];  // Par défaut, l'instructeur si ce n'est pas N1
+            }else{
+                $this->roles = [Roles::ATTENDEE, Roles::INSTRUCTOR];  // Par défaut, l'élève si c'est N1
+            }
+
+        }
+    }
+
 
     public function render()
     {
-        $roles = [Roles::ATTENDEE, Roles::INSTRUCTOR];
+        $roles = $this->roles;
         $users = User::all();
         $levels = Level::all();
         $successMessage = $this->successMessage;
