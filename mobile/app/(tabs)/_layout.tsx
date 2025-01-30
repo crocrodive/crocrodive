@@ -1,43 +1,40 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { Tabs } from "expo-router";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Colors } from "@/constants/Colors";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+    <Tabs screenOptions={{
+      tabBarShowLabel: false,
+      tabBarActiveTintColor: Colors.dark,
+      tabBarStyle: {
+        height:70,
+      }
+    }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={48} name="house.fill" color={color} style={{marginTop: 30}}/>,
+          headerShown: false,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="aVenir"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'aVenir',
+          tabBarIcon: ({ color }) => <FontAwesome name="calendar" size={40} color={color} style={{marginTop: 30}}/>,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="mesInfos"
+        options={{
+          title: 'mesInfos',
+          tabBarIcon: ({ color }) => <FontAwesome5 name="user-circle" size={40} color={color} style={{marginTop: 30}}/>,
+          headerShown: false,
         }}
       />
     </Tabs>
