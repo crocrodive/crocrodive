@@ -9,6 +9,10 @@ abstract class CustomPrefixedModel extends Model
     protected string $prefix = '';
 
     public function __get($key): mixed {
-        return parent::__get($this->prefix . $key);
+        if(! $this->isRelation($key) && ! $this->hasAttribute($key)) {
+            $key = $this->prefix . $key;
+        }
+
+        return parent::__get($key);
     }
 }

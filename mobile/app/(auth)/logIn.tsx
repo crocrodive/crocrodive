@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Colors } from "@/constants/Colors";
 import { BorderRadius } from "@/constants/BorderRadius";
 import { FontSize } from '@/constants/FontSize';
 import {useFonts} from 'expo-font';
 import { useRouter } from 'expo-router';
-import { useUser } from '@/contexts/UserContext'; // Assurez-vous que le chemin est correct
+import { useUser } from '@/contexts/UserContext';
 
 export default function LoginScreen() {
   const [id, setId] = useState('');
@@ -15,7 +15,7 @@ export default function LoginScreen() {
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const router = useRouter()
-  const { login } = useUser(); // Utilisez la fonction login de UserContext
+  const { login } = useUser();
 
 
   const [font] = useFonts({
@@ -38,9 +38,9 @@ export default function LoginScreen() {
       router.replace('/home');
     } catch (error) {
       if (error instanceof Error) {
-        Alert.alert('Login failed', error.message);
+        alert(error.message);
       } else {
-        Alert.alert('Login failed', 'An unknown error occurred');
+        alert('An unknown error occurred');
       }
     }
   };

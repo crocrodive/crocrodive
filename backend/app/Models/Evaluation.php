@@ -36,6 +36,7 @@ class Evaluation extends CustomPrefixedModel
         'sess_id',
         'rati_id',
         'eval_comment',
+        'rati_id',
     ];
 
     public function user() {

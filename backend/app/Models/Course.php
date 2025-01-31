@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
  *
  * @property string $id Identifier for the course (UUIDv4)
  * @property \Date $start_date Date of the beginning of the course
+ * @property \Illuminate\Database\Eloquent\Collection<string, Session> $sessions
+ * Session planned for this course.
  */
 class Course extends CustomPrefixedModel
 {
@@ -34,6 +36,11 @@ class Course extends CustomPrefixedModel
         'manager_user_id',
         'leve_id',
         'site_id',
+    ];
+
+    protected $visible = [
+        'cour_id',
+        'cour_start_date',
     ];
 
     public function manager() {
@@ -68,6 +75,10 @@ class Course extends CustomPrefixedModel
 
     public function sessions() {
         return $this->hasMany(Session::class, 'cour_id', 'cour_id');
+    }
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'croc_users_courses', 'cour_id', 'user_id');
     }
 
     public static function createCourse($data){

@@ -1,30 +1,69 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { FontSize } from '@/constants/FontSize';
 import CardSessionStudent from '@/components/CardSessionStudent';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '@/contexts/UserContext'; // Adjust the import path as needed
+import CardSessionTeacher from '@/components/CardSessionTeacher';
+import { useEffect, useState } from 'react';
+import { useUser } from '@/contexts/UserContext';
+import { fetchCourses } from '@/API/coursApiResource';
+import { Course } from '@/types/Course';
 
 export default function TabTwoScreen() {
-  const userContext = useContext(UserContext);
+  const { user } = useUser();
+  const currentDate = new Date().toISOString().split('T')[0];
+  const [courses, setCourses] = useState<Course[]>();
+
+  const isStudent = user?.role_id !== "Instructor";
 
   useEffect(() => {
-    console.log(userContext);
-  }, [userContext]);
+    async function getCourses() {
+      setCourses(await fetchCourses()); 
+    }
+    getCourses();
+  }, [])
 
-  const studentSessions = [
-    { id: '1', initiateur: "Michel", date: "30/01/2025", aptitudes: [{ nom: "Plonger", etat: 1}, { nom: "Couler", etat: 2}, { nom: "Nager", etat: 3}] },
-    { id: '2', initiateur: "Alice", date: "15/02/2025", aptitudes: [{ nom: "Courir", etat: 1}, { nom: "Sauter", etat: 2}, { nom: "Lancer", etat: 3}] },
-    { id: '3', initiateur: "John", date: "20/03/2025", aptitudes: [{ nom: "Escalader", etat: 1}, { nom: "Ramper", etat: 2}, { nom: "Grimper", etat: 3}] }
-  ];
 
   return (
-    <View>
-      <ThemedText type="title" style={styles.title}>Séances Passée</ThemedText>
-      {studentSessions.map((session) => (
-        <CardSessionStudent key={session.id} initiateur={session.initiateur} date= {session.date} aptitudes={session.aptitudes} onPress={() => {}}/>
-      ))}
-    </View>
+    <ScrollView>
+        <ThemedText type="title" style={styles.title}>Séances passée</ThemedText>
+          {isStudent ? (
+            courses?.map(course => (
+              course.sessions.map(session => {
+                if(new Date(session.date) < new Date(currentDate)){
+                    const aptitudes = session.attendees[0].evaluations
+                    .map(evaluation => ({
+                      nom: evaluation.ability.label,
+                      etat: evaluation.rating.id
+                    }));
+                  return <CardSessionStudent key={session.id} initiateur={session.instructor.firstname + ' ' + session.instructor.lastname} date={new Date(session.date).toLocaleDateString('fr-FR')} aptitudes={aptitudes} onPress={() => { } } lieu={course.site.name}/>
+                }
+              })
+            ))
+          ) : 
+          (
+            courses?.map(course => (
+              course.sessions.map(session => {
+                if(new Date(session.date) < new Date(currentDate)){
+                    const eleves = session.attendees
+                    .map(attendee => ({
+                      nom: attendee.firstname + " " + attendee.lastname,
+                      aptitudes: attendee.evaluations
+                      .map(evaluation => ({
+                        nom: evaluation.ability.label,
+                        etat: evaluation.rating.id,
+                        commentaire: evaluation.comment,
+                        evaluation: evaluation.id,
+                      }))
+                    }));
+                    
+                  return <CardSessionTeacher key={session.id} initiateur={session.instructor.firstname + ' ' + session.instructor.lastname} date={new Date(session.date).toLocaleDateString('fr-FR')} eleves={eleves} evaluationState={session.state} onPress={() => { } } lieu={course.site.name} evaluation={session.attendees[0].evaluations[0].rating.id}/>
+                }
+              })
+            ))
+            
+          )}
+          
+    </ScrollView>
   );
 }
 
@@ -44,6 +83,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 15,
       marginLeft: 20,
-      marginTop: 30,
+      marginTop: 10,
     },
 });
