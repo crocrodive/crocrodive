@@ -31,11 +31,33 @@ class CreateSessionDialog extends Component
     public $assignedStudents = [];
 
     protected $rules = [
-         "sessionDate" => "required|date|after:now",
+        'sessionDate' => 'required|date|after:now',
+        'selectedAttendees.*.user_id' => 'required|exists:users,user_id',
+        'assignedStudents.*.student_id' => 'required|exists:users,user_id',
+        'assignedStudents.*.initiator_id' => 'required|exists:users,user_id',
+        'assignedStudents.*.abilities' => 'array|max:3|min:1',
+        'assignedStudents.*.abilities.*' => 'nullable|exists:croc_abilities,abil_id|distinct',
+    ];
+
+    protected $messages = [
+        'sessionDate.required' => 'La date de la session est obligatoire.',
+        'sessionDate.date' => 'La date de la session doit être une date valide.',
+        'sessionDate.after' => 'La date de la session doit être postérieure à la date actuelle.',
+        'selectedAttendees.*.user_id.required' => 'L\'ID de l\'utilisateur sélectionné est obligatoire.',
+        'selectedAttendees.*.user_id.exists' => 'L\'utilisateur sélectionné n\'existe pas.',
+        'assignedStudents.*.student_id.required' => 'L\'ID de l\'étudiant assigné est obligatoire.',
+        'assignedStudents.*.student_id.exists' => 'L\'étudiant assigné n\'existe pas.',
+        'assignedStudents.*.initiator_id.required' => 'Les initiateurs assignés sont obligatoires.',
+        'assignedStudents.*.initiator_id.exists' => 'L\'initiateur assigné n\'existe pas.',
+        'assignedStudents.*.abilities.array' => 'Les compétences doivent être un tableau.',
+        'assignedStudents.*.abilities.max' => 'Un étudiant ne peut avoir plus de 3 compétences.',
+        'assignedStudents.*.abilities.min' => 'Un étudiant doit avoir au moins 1 compétence.',
+        'assignedStudents.*.abilities.*.exists' => 'La compétence sélectionnée n\'existe pas.',
+        'assignedStudents.*.abilities.*.distinct' => 'Les compétences doivent être distinctes.',
     ];
 
     protected $listeners = ['openCreateSessionDialog'];
-    
+
     public function openCreateSessionDialog($arr)
     {
         $this->isOpen = true;
@@ -53,6 +75,7 @@ class CreateSessionDialog extends Component
             ];
         })->toArray();
     }
+
     public function addStudent()
     {
         if (count($this->assignedStudents) <  count($this->selectedAttendees)) {
@@ -78,6 +101,13 @@ class CreateSessionDialog extends Component
     }
 
     public function saveSession(){
+        $fail = $this->validate();
+        foreach($fail['assignedStudents'] as $student){
+            if ($student['initiator_id'] === null) {
+                session()->flash('error', 'Un étudiant n\'a pas d\'initiateur assigné.');
+                return;
+            }
+        }
         $evalComment = 'Aucune remarque';
         $resp_id = Auth::user()->user_id;
         $date = $this->sessionDate;
@@ -98,6 +128,9 @@ class CreateSessionDialog extends Component
             $abilities = $student['abilities'];
 
             foreach($abilities as $ability){
+                if($ability === null){
+                    continue;
+                }
                 Evaluation::create([
                     'user_id' => $studentId,
                     'abil_id' => $ability,
@@ -129,6 +162,7 @@ class CreateSessionDialog extends Component
                 ]);
             }
         }
+        $this->sessionDate = '';
         $this->dispatch("updateSession");
         $this->isOpen = false;
     }
@@ -145,7 +179,6 @@ class CreateSessionDialog extends Component
         unset($this->assignedStudents[$studentIndex]['abilities'][$abilityIndex]);
         $this->assignedStudents[$studentIndex]['abilities'] = array_values($this->assignedStudents[$studentIndex]['abilities']);
     }
-
     public function render()
     {
         return view('livewire.create-session-dialog');
