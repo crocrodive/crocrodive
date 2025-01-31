@@ -36,7 +36,6 @@ class CreateSessionDialog extends Component
         'assignedStudents.*.student_id' => 'required|exists:users,user_id',
         'assignedStudents.*.initiator_id' => 'required|exists:users,user_id',
         'assignedStudents.*.abilities' => 'array|max:3|min:1',
-        'assignedStudents.*.abilities.*' => 'nullable|exists:croc_abilities,abil_id|distinct',
     ];
 
     protected $messages = [
@@ -53,7 +52,6 @@ class CreateSessionDialog extends Component
         'assignedStudents.*.abilities.max' => 'Un étudiant ne peut avoir plus de 3 compétences.',
         'assignedStudents.*.abilities.min' => 'Un étudiant doit avoir au moins 1 compétence.',
         'assignedStudents.*.abilities.*.exists' => 'La compétence sélectionnée n\'existe pas.',
-        'assignedStudents.*.abilities.*.distinct' => 'Les compétences doivent être distinctes.',
     ];
 
     protected $listeners = ['openCreateSessionDialog'];
