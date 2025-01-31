@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        //
+        $middleware->alias([
+            'ensure.roles' => \App\Http\Middleware\EnsureRoles::class,
+        ]);
         $middleware->validateCsrfTokens(
             // exclude the API from CSRF protection
             except: ['/api/*']

@@ -1,6 +1,5 @@
-<div>
+<div class="flex flex-col items-center">
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-
     <!-- Affichage du message de succès -->
     @if($successMessage)
         <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-4">
@@ -22,28 +21,10 @@
 
     <div class="relative">
         <!-- Bouton Ajouter membre -->
-        <button 
-            wire:click="ouvrirModal" 
-            class="bg-white text-h4 text-primary-100 border-primary-100 border-2 rounded-cards p-2" 
-        >
-            Ajouter membre
-        </button>    
-        <!-- Liste des membres -->
-            <div class="space-y-2">
-                @foreach($users as $user)
-                <div class="flex">
-                    <div class="block">{{ $user->user_lastname }} - {{ $user->user_firstname }}</div>
-                    @if($user->role_id != "Directeur Technique" && $user->role_id != "Responsable de formation")
-                        <button wire:click="ouvrirModalEdit({{$user}})">
-                            <img class="h-4 w-4 ml-4 items-center" src="{{asset('images/editer.png')}}" alt="">
-                        </button>
-                        <button wire:click="ouvrirModalDelete({{$user}})">
-                            <img class="rotate-45 h-4 w-4 ml-4 items-center" src="{{asset('images/croix.png')}}" alt="">
-                        </button>
-                    @endif
-                </div>
-                @endforeach
-            </div>
+        <div class='flex flex-row justify-center border-2 border-cta-300 w-[272px] h-12 rounded-button items-center
+        bg-background-100 hover:shadow-buttonBlack transition-all duration-300'>
+            <button id="createMember" wire:click="ouvrirModal" class='text-h4 font-poppinsRegular text-cta-300 cursor-pointer'>Ajouter un membre</button>
+        </div>
 
         <!-- Système Modal Ajouter membre -->
         @if($showModal)
@@ -55,8 +36,8 @@
 
             <!-- Contenu du modal -->
             <div
-                class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                    bg-white rounded-lg shadow-lg w-[800px] p-6"
+                class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%-20px)]
+                    bg-white rounded-lg shadow-lg w-[800px] p-6 h-[70%] overflow-hidden"
             >
                 <x-modal_create_user
                     :levels="$levels"

@@ -1,14 +1,14 @@
-<div class="w-full max-w-4xl p-4 max-h-screen overflow-y-auto scrollbar-hidden">
-    <form action="{{ route('add_user') }}" method="POST" class="space-y-4">
+<div class="w-full h-full max-w-4xl px-4 overflow-y-hidden scrollbar-hidden">
+    <form action="{{ route('manage_post') }}" method="POST" class="space-y-4 flex flex-col h-full">
         @csrf
         <!-- Header avec croix -->
-        <div class="flex items-center justify-between mb-6">
-            <p class="text-h4">Ajouter un membre</p>
-            <img src="{{asset('images/croix.png')}}" class="rotate-45 w-4 h-4 cursor-pointer" wire:click="fermerModal" alt="Fermer">    
+        <div class="flex items-center justify-between mb-6" style="margin-top: 0;">
+            <p class="text-h4 font-bold">Ajouter un membre</p>
+            <img src="{{asset('images/croix.png')}}" class="rotate-45 w-8 h-8 cursor-pointer" wire:click="fermerModal" alt="Fermer">    
         </div>
-
+        <hr class="my-4">
         <!-- Champs de formulaire -->
-        <div class="space-y-3">
+        <div class="space-y-3 overflow-y-scroll z-10">
             <x-input_create_user model="m_lastname" type="text" name="lastname" placeholder="Nom" required="true" />
             <x-input_create_user model="m_firstname" type="text" name="firstname" placeholder="Prénom" required="true" />
             <x-input_create_user model="m_phone" type="text" name="phone" placeholder="Téléphone" required="true" />
@@ -55,15 +55,3 @@
         </div>
     </form>
 </div>
-
-
-<style>
-    .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollbar-hidden {
-    -ms-overflow-style: none;  /* Pour IE et Edge */
-    scrollbar-width: none;     /* Pour Firefox */
-}
-</style>
