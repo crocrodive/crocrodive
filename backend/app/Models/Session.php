@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * A diving session ("séance" in french) of a course.
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\DB;
  *
  * @property string $id Identifier for the session (UUIDv4)
  * @property \DateTime $date Date and time of the session
+ * @property \Illuminate\Database\Eloquent\Collection<string, DivingGroup> $diving_groups
+ * The groups formed for this session (one instructor and multiple attendees).
+ * @property \Illuminate\Database\Eloquent\Collection<string, Evaluation> $evaluations
+ * Evaluations for this session.
  */
 class Session extends CustomPrefixedModel
 {
@@ -30,11 +35,21 @@ class Session extends CustomPrefixedModel
         'sess_date',
     ];
 
+    protected $visible = [
+        'sess_id',
+        'cour_id',
+        'sess_date',
+    ];
+
     public function course() {
         return $this->belongsTo(Course::class, 'cour_id', 'cour_id');
     }
 
-    public function evaluations() {
+    public function diving_groups(): HasMany {
+        return $this->hasMany(DivingGroup::class, 'sess_id', 'sess_id');
+    }
+
+    public function evaluations(): HasMany {
         return $this->hasMany(Evaluation::class, 'sess_id', 'sess_id');
     }
 

@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -39,6 +40,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $user_address The address of the user
  * @property string $user_birth_date The birth date of the user
  * @property string $user_diving_license_number The diving license number of the user
+ * @property \Illuminate\Database\Eloquent\Collection<string, Course> $courses
+ * Every course in which the user participate, either as attendee or instructor.
  * @see \App\Enum\Roles
  */
 class User extends Authenticatable
@@ -106,7 +109,17 @@ class User extends Authenticatable
         ];
     }
 
-        /**
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'croc_users_courses',
+            'user_id',
+            'cour_id'
+        );
+    }
+
+    /**
      * The attributes that should have default values.
      *
      * @var array<string, mixed>

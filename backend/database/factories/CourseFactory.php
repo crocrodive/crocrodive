@@ -19,7 +19,7 @@ class CourseFactory extends Factory
     {
         return [
             'manager_user_id' => \App\Models\User::where("role_id", '=', $this->course_manager )->inRandomOrder()->first()->user_id,
-            'leve_id' => \App\Models\Level::inRandomOrder()->first()->id,
+            'leve_id' => \App\Models\Level::inRandomOrder()->where('leve_has_courses', '=', '1')->first()->id,
             'site_id' => \App\Models\Site::inRandomOrder()->first()->id,
             'cour_start_date' => $this->faker->date(),
         ];

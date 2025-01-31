@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRootNavigationState, useRouter } from "expo-router";
-import { useUser } from '@/contexts/UserContext'; // Assurez-vous que le chemin est correct
+import { useUser } from '@/contexts/UserContext';
 
 export default function Index() {
   const router = useRouter();

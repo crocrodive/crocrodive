@@ -3,6 +3,7 @@
 use ApiPlatform\Metadata\UrlGeneratorInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 return [
     'title' => 'API Platform',
@@ -16,6 +17,7 @@ return [
 
     'resources' => [
         app_path('Models'),
+        app_path('ApiResource'),
     ],
 
     'formats' => [
@@ -67,7 +69,8 @@ return [
 
     'exception_to_status' => [
         AuthenticationException::class => 401,
-        AuthorizationException::class => 403
+        AuthorizationException::class => 403,
+        BadRequestHttpException::class => 400,
     ],
 
     'swagger_ui' => [

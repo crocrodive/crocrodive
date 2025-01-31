@@ -6,27 +6,30 @@ import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
 interface SessionProps {
     initiateur: string;
     date: string;
+    lieu: string;
     aptitudes: {
         nom: string;
-        etat: number;
+        etat: Etat;
     }[];
     onPress: () => void;
 }
 
-const getEtatText = (etat: number) => {
-    switch (etat) {
-        case 1:
-            return "non évaluée";
-        case 2:
-            return "en cours d'acquisition";
-        case 3:
-            return "acquise";
-        default:
-            return "absent";
-    }
+enum Etat {
+    NonEvaluee = 1,
+    EnCoursAcquisition,
+    Acquise,
+    Absent
+}
+
+
+const etatText = {
+    [Etat.NonEvaluee]: "non évaluée",
+    [Etat.EnCoursAcquisition]: "en cours d'acquisition",
+    [Etat.Acquise]: "acquise",
+    [Etat.Absent]: "absent"
 };
 
-export default function CardSessionStudent({ initiateur, date, aptitudes, onPress }: SessionProps) {
+export default function CardSessionStudent({ initiateur, lieu, date, aptitudes, onPress }: SessionProps) {
     const [isPopupVisible, setPopupVisible] = useState(false);
 
     const handlePress = () => {
@@ -44,21 +47,22 @@ export default function CardSessionStudent({ initiateur, date, aptitudes, onPres
             <TouchableOpacity onPress={handlePress} style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>
-                        {initiateur}
+                        {lieu}
                     </Text>
                     <Text style={styles.date}>
                         {date}
                     </Text>
                 </View>
+                <Text style={styles.titleInitiateur}>{initiateur}</Text>
                 <View style={styles.separator} />
                 <View style={styles.aptitudesList}>
                     {aptitudes.map((aptitude) => (
                         <View key={aptitude.nom} style={styles.aptitudeContainer}>
                             <View style={[
                                 styles.circle,
-                                aptitude.etat === 1 && styles.circleEtat1,
-                                aptitude.etat === 2 && styles.circleEtat2,
-                                aptitude.etat === 3 && styles.circleEtat3,
+                                aptitude.etat === Etat.NonEvaluee && styles.circleEtat1,
+                                aptitude.etat === Etat.EnCoursAcquisition && styles.circleEtat2,
+                                aptitude.etat === Etat.Acquise && styles.circleEtat3,
                             ]} />
                             <Text style={styles.aptitude}>
                                 {aptitude.nom}
@@ -82,11 +86,11 @@ export default function CardSessionStudent({ initiateur, date, aptitudes, onPres
                                 <View style={styles.aptitudePopupContainer}>
                                     <View style={[
                                     styles.circle,
-                                    aptitude.etat === 1 && styles.circleEtat1,
-                                    aptitude.etat === 2 && styles.circleEtat2,
-                                    aptitude.etat === 3 && styles.circleEtat3,
+                                    aptitude.etat === Etat.NonEvaluee && styles.circleEtat1,
+                                    aptitude.etat === Etat.EnCoursAcquisition && styles.circleEtat2,
+                                    aptitude.etat === Etat.Acquise && styles.circleEtat3,
                                     ]} />
-                                    <Text style={styles.popupAptitudeEtat}>{getEtatText(aptitude.etat)}</Text>
+                                    <Text style={styles.popupAptitudeEtat}>{etatText[aptitude.etat]}</Text>
                                 </View>
                             </View>
                         ))}
@@ -121,6 +125,11 @@ const styles = StyleSheet.create({
         ...FontSize.normalText,
         fontWeight: 'bold',
     },
+    titleInitiateur: {
+        ...FontSize.normalText,
+        fontWeight: 'bold',
+        marginLeft: 8,
+    },
     date: {
         ...FontSize.smallText,
     },
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     },
     aptitudeContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'baseline',
     },
     aptitudesList: {
         marginLeft: 30,

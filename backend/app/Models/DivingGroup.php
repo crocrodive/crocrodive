@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Group of one instructor and a few attendees (usually two)
@@ -14,6 +15,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * one session.
  *
  * @property string $id Identifier for the group (UUIDv4)
+ * @property User $instructor Instructor of the diving group
+ * @property \Illuminate\Database\Eloquent\Collection<string, User> $attendees
+ * Attendees of the diving group
+ * @property Session $session Session for which the group is formed.
  */
 class DivingGroup extends CustomPrefixedModel
 {
@@ -33,5 +38,9 @@ class DivingGroup extends CustomPrefixedModel
 
     public function session() {
         return $this->belongsTo(Session::class, 'sess_id', 'sess_id');
+    }
+
+    public function attendees(): BelongsToMany {
+        return $this->belongsToMany(User::class, 'croc_users_groups', 'grou_id', 'user_id');
     }
 }

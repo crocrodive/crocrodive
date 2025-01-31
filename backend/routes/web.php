@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiSessionController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Middleware\EnsureConnected;
 use App\Http\Middleware\EnsureGuest;
@@ -92,6 +93,12 @@ Route::middleware([EnsureTechnicalDirector::class])->group(function () {
     Route::post('/user/{id}', [CreateUserController::class, 'deleteUser'])->name('delete_user');
 });
 
+Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+/// API routes
+
 Route::post('/api/login', [ApiUserController::class, 'login']);
 
-
+Route::patch('/api/sessions/{id}/set_evaluated', [ApiSessionController::class, 'setEvaluated'])
+    ->withoutMiddleware('auth:sanctum');

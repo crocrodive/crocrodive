@@ -1,40 +1,70 @@
-import { StyleSheet, Image, Platform, View, StatusBar } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { FontSize } from '@/constants/FontSize';
 import CardSessionStudent from '@/components/CardSessionStudent'
 import CardSessionTeacher from '@/components/CardSessionTeacher';
+import { useUser } from '@/contexts/UserContext';
+import { useEffect, useState } from 'react';
+import { fetchCourses } from '@/API/coursApiResource';
+import { Course } from '@/types/Course';
 
 export default function TabTwoScreen() {
+  
+  const { user } = useUser();
+  const isStudent = user?.role_id !== "Instructor";
+  const [courses, setCourses] = useState<Course[]>();
+  const currentDate = new Date().toISOString().split('T')[0];
 
-  const isStudent = false
+  console.log(user?.name)
 
-  const studentSessions = [
-    { initiateur: "Michel", date: "30/01/2025", aptitudes: [{ nom: "Plonger", etat: 1}, { nom: "Couler", etat: 2}, { nom: "Nager", etat: 3}] },
-    { initiateur: "Alice", date: "15/02/2025", aptitudes: [{ nom: "Courir", etat: 1}, { nom: "Sauter", etat: 2}, { nom: "Lancer", etat: 3}] },
-    { initiateur: "John", date: "20/03/2025", aptitudes: [{ nom: "Escalader", etat: 1}, { nom: "Ramper", etat: 2}, { nom: "Grimper", etat: 3}] }
-];
+  useEffect(() => {
+    async function getCourses() {
+      setCourses(await fetchCourses()); 
+    }
+    getCourses();
+  }, [])
+
 
   return (
-    <View>
+    <ScrollView>
       <ThemedText type="title" style={styles.title}>Séances à venir</ThemedText>
       {isStudent ? (
-        studentSessions.map((session) => (
-          <CardSessionStudent initiateur={session.initiateur} date= {session.date} aptitudes={session.aptitudes} onPress={() => {}}/>
+        courses?.map(course => (
+          course.sessions.map(session => {
+            if(new Date(session.date) >= new Date(currentDate)){
+                const aptitudes = session.attendees[0].evaluations
+                .map(evaluation => ({
+                  nom: evaluation.ability.label,
+                  etat: evaluation.rating.id
+                }));
+              return <CardSessionStudent key={session.id} initiateur={session.instructor.firstname + ' ' + session.instructor.lastname} date={new Date(session.date).toLocaleDateString('fr-FR')} aptitudes={aptitudes} onPress={() => { } } lieu={course.site.name}/>
+            }
+          })
         ))
-      ) : 
-      (
-        studentSessions.map((session) => (
-          <CardSessionTeacher initiateur={session.initiateur} date={session.date} eleves={[{ nom: "Paul", aptitudes: [{ nom: "Plonger", etat: 1}, { nom: "Couler", etat: 2}, { nom: "Nager", etat: 3}] }, { nom: "Gabrielle", aptitudes: [{ nom: "Plonger", etat: 1}, { nom: "Couler", etat: 2}, { nom: "Nager", etat: 3}] }]} onPress={() => {}}/>   
+      ) : (
+        courses?.map(course => (
+          course.sessions.map(session => {
+            if(new Date(session.date) >= new Date(currentDate)){
+                const eleves = session.attendees
+                .map(attendee => ({
+                  nom: attendee.firstname + " " + attendee.lastname,
+                  aptitudes: attendee.evaluations
+                  .map(evaluation => ({
+                    nom: evaluation.ability.label,
+                    etat: evaluation.rating.id,
+                    commentaire: evaluation.comment,
+                    evaluation: evaluation.id,
+                  }))
+                }));
+                
+              return <CardSessionTeacher key={session.id} initiateur={session.instructor.firstname + ' ' + session.instructor.lastname} date={new Date(session.date).toLocaleDateString('fr-FR')} eleves={eleves} evaluation={session.state} onPress={() => { } } lieu={course.site.name}/>
+            }
+          })
         ))
-      )}
+      )
+    }
       
-    </View>
+    </ScrollView>
   );
 }
 
@@ -54,6 +84,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 15,
       marginLeft: 20,
-      marginTop: 30,
+      marginTop: 10,
     },
 });

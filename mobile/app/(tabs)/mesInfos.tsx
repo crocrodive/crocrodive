@@ -1,28 +1,66 @@
-import { StyleSheet, Image, Platform, View, StatusBar, Text } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { FontSize } from '@/constants/FontSize';
-import CardSessionStudent from '@/components/CardSessionStudent'
-import { UserContext, UserContextType, useUser } from '@/contexts/UserContext';
-import { useContext } from 'react';
+import { useUser } from '@/contexts/UserContext';
+import CardSkill from "@/components/CardSkill";
+import CardStudentsSkill from '@/components/CardStudentsSkill';
 
 export default function TabTwoScreen() {
 
   const { user } = useUser();
 
+  const isStudent = user?.role_id !== "Instructor";
+
+  const aptSessions = [
+    { competence:"S'équiper et se déséquiper", aptitudes:[{nom: "Gréage et dégréage", etat: 3}, {nom: "Capelage et décapelage", etat: 3}, {nom: "Choix de son matériel personnel", etat: 3}] },
+    { competence:"Se mettre à l'eau et en sortir", aptitudes:[{nom: "Gréage et dégréage", etat: 2}, {nom: "Capelage et décapelage", etat: 2}, {nom: "Choix de son matériel personnel", etat: 3}] },
+    { competence:"Evoluer dans l'eau et s'immerger", aptitudes:[{nom: "Gréage et dégréage", etat: 1}, {nom: "Capelage et décapelage", etat: 3}, {nom: "Choix de son matériel personnel", etat: 3}]}
+  ];
+
   return (
-    <View>
-      <Text style={styles.title}>Vous avez émergé {user.user_firstname} {user.user_lastname}</Text>
-    </View>
+    <ScrollView>
+      {isStudent ? (
+        <View>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title_sec}>Avancée Formation Niveau {user?.level_id}</Text>
+            <Text style={styles.name}>{user?.user_firstname} {user?.user_lastname.toUpperCase()}</Text>
+          </View>
+          {aptSessions.map((session, index) => (
+            <CardSkill key={index} competence={session.competence} aptitudes={session.aptitudes} onPress={() => { /* handle press event */ }} />
+          ))}
+        </View>
+      ) : (
+        <View>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title}>Les élèves de ma formation</Text>
+          </View>
+          {aptSessions.map((session, index) => (
+            <CardStudentsSkill 
+              key={index}
+              eleve="Paul MORISSE" 
+              formation={{ 
+                nomForm: "Niveau 1", 
+                competences: [
+                  { nom: "Gréage et dégréage", aptitudes: [{ nom: "Plonger", etat: 3 }, { nom: "Couler", etat: 3 }, { nom: "Nager", etat: 3 }] },
+                  { nom: "Gréage et dégréage", aptitudes: [{ nom: "Plonger", etat: 3 }, { nom: "Couler", etat: 3 }, { nom: "Nager", etat: 2 }] }
+                ]
+              }} 
+            />
+          ))}
+        </View>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    marginLeft: 20,
+    marginTop: 10,
+  },
   headerImage: {
     color: '#808080',
     bottom: -90,
@@ -33,11 +71,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
-  title: {
-      ...FontSize.largeText,
+  title_sec: {
+      ...FontSize.normalText,
       fontWeight: 'bold',
-      marginBottom: 15,
       marginLeft: 20,
-      marginTop: 30,
     },
+  name: {
+      ...FontSize.normalText,
+      fontWeight: 'bold',
+      marginRight: 20,
+      textAlign: "right",
+    },
+  title: {
+    ...FontSize.largeText,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    marginLeft: 20,
+    marginTop: 10,
+  },
 });
