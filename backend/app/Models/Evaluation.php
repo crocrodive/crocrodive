@@ -31,6 +31,10 @@ class Evaluation extends CustomPrefixedModel
     protected $primaryKey = 'eval_id';
 
     protected $fillable = [
+        'user_id',
+        'abil_id',
+        'sess_id',
+        'rati_id',
         'eval_comment',
     ];
 

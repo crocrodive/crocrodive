@@ -12,6 +12,7 @@ use App\Http\Controllers\ManageController;
 use App\Http\Controllers\FormationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Sessions;
 
 // Utilisateur non connecté
 Route::middleware([EnsureGuest::class])->group(function () {
@@ -70,3 +71,8 @@ Route::middleware([EnsureTechnicalDirector::class])->group(function () {
 });
 
 Route::post('/api/login', [ApiUserController::class, 'login']);
+
+Route::get('/manage', [ManageController::class, 'index'])
+        ->name('manage');
+Route::get('/sessions', [Sessions::class, 'index'])
+        ->name('sessions');
