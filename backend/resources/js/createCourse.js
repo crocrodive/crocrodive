@@ -15,7 +15,7 @@ const submit = document.getElementById("submit");
 
 let trainersList = [];
 let participantList = [];
-
+let participantsList = [];
 const locationsList = await axios
     .get("/api/locations")
     .then((response) => response.data);
@@ -31,7 +31,7 @@ const clearSelect = (select) => {
 };
 
 levelSelect.addEventListener("change", async (e) => {
-    const participantsList = await axios
+    participantsList = await axios
         .get("/api/participants", {
             params: {
                 level_id: e.target.value,
@@ -78,12 +78,6 @@ const initialize = () => {
     fillSelect(respSelect, respList, "user_id", "user_firstname");
     fillSelect(levelSelect, levelsList, "leve_id", "leve_name");
     fillSelect(locationSelect, locationsList, "site_id", "site_name");
-    fillSelect(
-        participantSelect,
-        participantsList,
-        "user_id",
-        "user_firstname"
-    );
     fillSelect(trainerSelect, respList, "user_id", "user_firstname");
 };
 
