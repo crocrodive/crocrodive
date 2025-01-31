@@ -114,4 +114,18 @@ class User extends Authenticatable
     protected $attributes = [
         'user_is_password_temporary' => true,
     ];
+
+    public static function getAllUserData(){
+        return User::join('croc_levels', 'users.leve_id', '=', 'croc_levels.leve_id')
+            ->join('croc_roles', 'users.role_id', '=', 'croc_roles.role_id')
+            ->get(['user_firstname', 'user_lastname', 'user_telephone', 'leve_name', 'croc_roles.role_id', 'user_address']);
+    }
+
+    public static function getInstructorData(){
+        return User::where('role_id', '=', 'Initiateur')->get(['user_firstname','user_lastname','leve_id', 'user_id']);
+    }
+
+    public static function getParticipantData() {
+        return User::where('role_id', '=', 'Élève')->get(['user_firstname','user_lastname','leve_id', 'user_id']);
+    }
 }

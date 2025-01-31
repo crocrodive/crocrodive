@@ -64,14 +64,10 @@ export default {
                 poppinsSemiBold: ["Poppins-SemiBold", "sans-serif"],
             },
             boxShadow: {
-                button: {
-                    black: "0px 10px 20px rgba(0, 0, 0, 0.15)",
-                    hover: "0px 15px 30px rgba(0, 0, 0, 0.25)",
-                },
-                card: {
-                    black: "0px 20px 40px rgba(0, 0, 0, 0.15)",
-                    hover: "0px 30px 60px rgba(0, 0, 0, 0.25)",
-                },
+                buttonBlack: "0px 10px 20px rgba(0, 0, 0, 0.15)",
+                buttonHover: "0px 15px 30px rgba(0, 0, 0, 0.25)",
+                cardBlack: "0px 20px 40px rgba(0, 0, 0, 0.15)",
+                cardHover: "0px 30px 60px rgba(0, 0, 0, 0.25)",
             },
             borderRadius: {
                 secondary_btn: "10px",

@@ -37,4 +37,8 @@ class Site extends CustomPrefixedModel
     public function town() {
         return $this->belongsTo(Town::class, 'town_insee', 'town_insee');
     }
+
+    public static function getAllSitesData(){
+        return Site::get(['site_id', 'site_name', 'site_address', 'town_insee']);
+    }
 }
