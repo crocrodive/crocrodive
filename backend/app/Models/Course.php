@@ -53,6 +53,7 @@ class Course extends CustomPrefixedModel
         return Course::join('croc_sites', 'croc_courses.site_id', '=', 'croc_sites.site_id')
             ->join('croc_levels', 'croc_courses.leve_id', '=', 'croc_levels.leve_id')
             ->join('users', 'croc_courses.manager_user_id', '=', 'users.user_id')
+            ->orderBy('croc_courses.cour_start_date', 'desc')
             ->get(['croc_courses.cour_start_date', 'user_firstname', 'user_lastname', 'leve_name', 'site_name', 'cour_id']);
     }
 
