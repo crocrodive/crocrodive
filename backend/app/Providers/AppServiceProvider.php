@@ -11,7 +11,6 @@ use App\State\CourseProvider;
 use App\State\EvaluationProvider;
 use App\State\RatingProvider;
 use Illuminate\Support\Facades\Gate;
-use App\OpenApi\UserOpenApiDecorator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

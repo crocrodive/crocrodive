@@ -9,6 +9,7 @@ use App\Models\Session;
 use App\Models\Site;
 use App\Models\Town;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
