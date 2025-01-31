@@ -18,7 +18,7 @@ class SiteFactory extends Factory
     {
         return [
             'town_insee' => \App\Models\Town::inRandomOrder()->first()->insee,
-            'site_name' => $this->faker->randomElement(['Mer', 'Océan', 'Piscine', 'Lac']),
+            'site_name' => $this->faker->randomElement(['Mer' . $this->faker->randomDigit(), 'Océan' . $this->faker->randomDigit(), 'Piscine' . $this->faker->randomDigit(), 'Lac' . $this->faker->randomDigit()]),
             'site_address' => $this->faker->address(),
         ];
     }

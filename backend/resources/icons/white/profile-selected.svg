@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="g2"
+     style="font-variation-settings:normal;display:inline;opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:92;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#ffffff">
+    <circle
+       style="font-variation-settings:normal;display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:92;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#ffffff;stop-opacity:1"
+       id="path1-9"
+       cx="512"
+       cy="512"
+       r="448" />
+    <circle
+       style="font-variation-settings:normal;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:92;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#ffffff;stop-opacity:1"
+       id="path1-3-7"
+       cx="512"
+       cy="464"
+       r="216.06848" />
+    <path
+       style="font-variation-settings:normal;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:92;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#ffffff;stop-opacity:1"
+       d="m 189.01542,801 c 0,0 129.82104,-116 322,-116 192.09588,0.94165 320.96917,116.97411 320.96917,116.97411"
+       id="path2-3" />
+    <path
+       style="font-variation-settings:normal;display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:92;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 190.2126,832.41552 459.5235,674.2189 335.22616,548.97992 322.04311,398.31648 430.33246,281.55231 l 168.55472,-8.47482 98.87289,114.88087 -14.1247,169.49638 -116.76417,121.4724 255.18621,137.48039 145.95521,-242.9448 -11.29976,-204.3373 c 0,0 -141.24698,-304.15182 -443.51551,-301.326881 C 210.92882,70.623489 67.798549,343.70098 64.97361,463.29009 62.14867,582.87919 190.2126,832.41552 190.2126,832.41552 Z"
+       id="path3" />
+  </g>
+  
+</svg>

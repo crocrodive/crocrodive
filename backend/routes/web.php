@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ManageController;
+use App\Http\Controllers\FormationController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 // Utilisateur non connecté
 Route::middleware([EnsureGuest::class])->group(function () {
@@ -30,7 +34,32 @@ Route::middleware([EnsureConnected::class])->group(function () {
     // Route to handle logout
     Route::get('/logout', [LoginController::class, 'destroy'])->name('logout_get');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    
+    Route::get('/api/locations', [FormationController::class, 'getLocations'])
+    ->name('api.location');
+
+    Route::get('/api/trainers', [FormationController::class, 'getInstructorData'])
+    ->name('api.trainer');
+
+    Route::get('/api/levels', [FormationController::class, 'getLevels'])
+    ->name('api.levels');
+
+    Route::get('/api/participants', [FormationController::class, 'getParticipantData'])
+    ->name('api.participants');
+
+    Route::post('/api/courses', [FormationController::class, 'store'])
+    ->name('api.courses');
+
+    Route::get('/course/{id}', [FormationController::class, 'show'])
+    ->name('course.show');
 });
+
+Route::get('/manage', [ManageController::class, 'index'])
+        ->name('manage');
+
+Route::get('/formation', [FormationController::class, 'index'])
+    ->name('formation');
+
 
 // Directeur technique
 Route::middleware([EnsureTechnicalDirector::class])->group(function () {

@@ -16,7 +16,7 @@ class UserCourse extends Model
     use HasUuids;
     protected $table = 'croc_users_courses';
 
-    protected $primaryKey = ['user_id', 'cour_id'];
+    //protected $primaryKey = ['user_id', 'cour_id'];
     public $incrementing = false;
     protected $fillable = [
         'user_id',

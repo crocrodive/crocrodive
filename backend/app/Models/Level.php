@@ -37,4 +37,9 @@ class Level extends CustomPrefixedModel
     {
         return $this->belongsTo(Level::class, 'instructor_required_level_id', 'leve_id');
     }
+
+    public static function getLevelsData()
+    {
+        return Level::where('leve_has_courses', "!=", "0")->get(['leve_id', 'leve_name', 'instructor_required_level_id']);
+    }
 }
