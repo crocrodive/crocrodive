@@ -25,13 +25,27 @@ const respList = await axios
 const levelsList = await axios
     .get("/api/levels")
     .then((response) => response.data);
-const participantsList = await axios
-    .get("/api/participants")
-    .then((response) => response.data);
 
 const clearSelect = (select) => {
     select.innerHTML = "";
 };
+
+levelSelect.addEventListener("change", async (e) => {
+    const participantsList = await axios
+        .get("/api/participants", {
+            params: {
+                level_id: e.target.value,
+            },
+        })
+        .then((response) => response.data);
+    clearSelect(participantSelect);
+    fillSelect(
+        participantSelect,
+        participantsList,
+        "user_id",
+        "user_firstname"
+    );
+});
 
 const fillSelect = (select, dataList, valueField, textField) => {
     const defaultOption = document.createElement("option");
@@ -99,7 +113,7 @@ const updateTrainerList = () => {
     initiatorDisplayableList.innerHTML = trainersList
         .map(
             (trainer, index) =>
-                `<li data-index="${index}">${trainer.user_firstname}</li>`
+                `<li class="hover:text-red-500 transition-all cursor-pointer" data-index="${index}">${trainer.user_firstname}</li>`
         )
         .join("");
     initiatorDisplayableList.querySelectorAll("li").forEach((li) => {
@@ -116,7 +130,7 @@ const updateParticipantList = () => {
     participantDisplayableList.innerHTML = participantList
         .map(
             (participant, index) =>
-                `<li data-index="${index}">${participant.user_firstname}</li>`
+                `<li data-index="${index}" class="hover:text-red-500 transition-all cursor-pointer">${participant.user_firstname}</li>`
         )
         .join("");
     participantDisplayableList.querySelectorAll("li").forEach((li) => {
@@ -212,10 +226,8 @@ submit.addEventListener("click", async (e) => {
             listCourse.style.display = "block";
             createCourseForm.style.display = "none";
             location.reload();
-
         })
         .catch((error) => {
             console.log(error);
         });
 });
-

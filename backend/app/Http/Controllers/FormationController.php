@@ -64,7 +64,7 @@ class FormationController extends Controller
 
     public function getParticipantData(Request $request)
     {
-        $participants = User::getParticipantData();
+        $participants = User::getParticipantData($request->all());
         return response()->json($participants);
     }
 }

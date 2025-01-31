@@ -138,7 +138,9 @@ class User extends Authenticatable
         return User::where('role_id', '=', 'Initiateur')->get(['user_firstname','user_lastname','leve_id', 'user_id']);
     }
 
-    public static function getParticipantData() {
-        return User::where('role_id', '=', 'Élève')->get(['user_firstname','user_lastname','leve_id', 'user_id']);
+    public static function getParticipantData($leve_id) {
+        return User::where('role_id', '=', 'Élève')
+            ->where('leve_id', '=', intval($leve_id["level_id"]) - 1)
+            ->get(['user_firstname', 'user_lastname', 'leve_id', 'user_id']);
     }
 }
