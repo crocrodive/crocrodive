@@ -1,15 +1,8 @@
 import axios from "axios";
 
 const showCourses = document.getElementById("createCourseBtn");
-const createCourseForm = document.getElementById("createCourse");
+const createCourseForm = document.getElementById("createCourseModal");
 const listCourse = document.getElementById("listCourse");
-
-showCourses.addEventListener("click", () => {
-    createCourseForm.style.display = "block";
-    listCourse.style.display = "none";
-});
-
-
 
 const locationSelect = document.getElementById("locationSelect");
 const respSelect = document.getElementById("respSelect");
