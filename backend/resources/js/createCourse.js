@@ -174,27 +174,35 @@ submit.addEventListener("click", async (e) => {
         return;
     }
 
+    let trainerLevelCorrect = true;
     trainersList.forEach((trainer) => {
         if (
             levelSelect.value <
             respList.find((resp) => resp.user_id == trainer.user_id)
                 .instructor_required_level_id
         ) {
-            alert("Le niveau de l'intervenant n'est pas correct");
-            return;
+            trainerLevelCorrect = false;
         }
     });
+    if (!trainerLevelCorrect) {
+        alert("Le niveau de l'intervenant n'est pas correct");
+        return;
+    }
 
+    let participantLevelCorrect = true;
     participantList.forEach((participant) => {
         if (
             levelSelect.value - 1 !=
             participantsList.find((p) => participant.user_id == p.user_id)
                 .leve_id
         ) {
-            alert("Le niveau du participant n'est pas correct");
-            return;
+            participantLevelCorrect = false;
         }
     });
+    if (!participantLevelCorrect) {
+        alert("Le niveau du participant n'est pas correct");
+        return;
+    }
 
     const course = {
         location_id: locationSelect.value,
