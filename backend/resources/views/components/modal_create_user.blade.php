@@ -1,5 +1,5 @@
 <div class="w-full max-w-4xl p-4 max-h-screen overflow-y-auto scrollbar-hidden">
-    <form action="{{ route('create_user') }}" method="POST" class="space-y-4">
+    <form action="{{ route('add_user') }}" method="POST" class="space-y-4">
         @csrf
         <!-- Header avec croix -->
         <div class="flex items-center justify-between mb-6">

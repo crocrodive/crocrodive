@@ -26,6 +26,56 @@ class CreateUserController extends Controller
 
     
 
+    public function edit(Request $request, $id)
+    {
+        // Récupérer l'utilisateur avec l'id
+        $user = User::find($id);
+    
+        // Vérifier si l'utilisateur existe
+        if ($user) {
+            // Mise à jour des informations
+            $user->update([
+                'user_lastname' => $request->lastname,
+                'user_firstname' => $request->firstname,
+                'user_telephone' => $request->phone,
+                'user_postal_code' => $request->zipcode,
+                'user_medical_cert_date' => $request->certif,
+                'user_city' => $request->city,
+                'user_birth_date' => $request->birthdate,
+                'user_diving_license_number' => $request->licence,
+                'role_id' => $request->role,
+                'leve_id' => $request->level,
+            ]);
+    
+            // Si la mise à jour est bien effectuée, mettre en session 'success_edit' à true
+            session()->put('success_edit', true);
+            return redirect()->route('create_user')->with('success_edit', true);
+        } else {
+            // Si l'utilisateur n'existe pas
+            return redirect()->route('create_user')->with('success_edit', false);
+        }
+    }
+    
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            // Supprimer l'utilisateur
+            $user->delete();
+
+            // Ajouter un message flash de succès
+            session()->flash('success_message', 'L\'utilisateur a été supprimé avec succès.');
+        } else {
+            // Si l'utilisateur n'est pas trouvé
+            session()->flash('error_message', 'Utilisateur non trouvé.');
+        }
+
+        // Rediriger vers la page des utilisateurs ou une autre page
+        return redirect()->route('create_user'); // Change cette route en fonction de ta configuration
+    }
+
 
     public function create(Request $request)
     {
@@ -82,7 +132,7 @@ class CreateUserController extends Controller
             session()->put('success', false);
         }
 
-        return redirect()->route('add_user')->with('success', session('success'));
+        return redirect()->route('create_user')->with('success', session('success'));
     }
 
 }

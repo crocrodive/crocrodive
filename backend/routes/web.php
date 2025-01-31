@@ -34,8 +34,10 @@ Route::middleware([EnsureConnected::class])->group(function () {
 
 // Directeur technique
 Route::middleware([EnsureTechnicalDirector::class])->group(function () {
-    Route::get('/create_user', [CreateUserController::class, 'index'])->name('add_user');
-    Route::post('/create_user', [CreateUserController::class, 'create'])->name('create_user');
+    Route::get('/users', [CreateUserController::class, 'index'])->name('create_user');
+    Route::post('/create_user', [CreateUserController::class, 'create'])->name('add_user');
+    Route::post('/edit_user/{id}', [CreateUserController::class, 'edit'])->name('update_user');
+    Route::post('/user/{id}', [CreateUserController::class, 'deleteUser'])->name('delete_user');
 });
 
 Route::post('/api/login', [ApiUserController::class, 'login']);
