@@ -1,12 +1,25 @@
 <div x-data="{ open: @entangle('isOpen') }" x-cloak>
     <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-8 rounded-lg shadow-md w-2/3 relative">
+        <div class="bg-white p-8 rounded-lg shadow-md w-2/3 relative overflow-scroll max-h-[800px]">
             <button @click="open = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
             <h2 class="text-2xl font-semibold mb-6">Ajouter une séance</h2>
+
+            {{-- Messages d'erreur --}}
+            @if ($errors->any())
+                <div class="mb-4">
+                    <div class="bg-red-500 text-white p-4 rounded-lg">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
 
             {{-- Date de la séance --}}
             <div class="mb-4">
@@ -53,7 +66,7 @@
                                     <div class="flex flex-col space-y-2">
                                         @foreach($student['abilities'] as $abilityIndex => $ability)
                                             <select wire:model="assignedStudents.{{ $index }}.abilities.{{ $abilityIndex }}" class="border p-2 rounded w-full">
-                                                <option value="">Choisir une aptitude</option>
+                                                <option value>Choisir une aptitude</option>
                                                 @foreach($abilities as $abil)
                                                     <option value="{{ $abil['abil_id'] }}" {{ $ability == $abil['abil_id'] ? 'selected' : '' }}>
                                                         {{ $abil['abil_label'] }}

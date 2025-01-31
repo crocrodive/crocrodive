@@ -30,6 +30,9 @@ class CourseManagerContent extends Component
             ->where('users.user_id', $resp_id)
             ->select('croc_courses.cour_id', 'croc_courses.manager_user_id', 'users.user_id', 'users.user_firstname', 'users.user_lastname', 'users.role_id')
             ->first();
+        if(!$course){
+            return;
+        }
         $course_id = $course['cour_id'];
         $selectedAttendees = $this->getAssignedStudents($course_id);
 
