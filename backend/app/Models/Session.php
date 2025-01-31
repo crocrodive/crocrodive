@@ -26,6 +26,7 @@ class Session extends CustomPrefixedModel
     protected $primaryKey = 'sess_id';
 
     protected $fillable = [
+        'cour_id',
         'sess_date',
     ];
 

@@ -22,7 +22,11 @@ class DivingGroup extends CustomPrefixedModel
     protected $table = 'croc_diving_groups';
     protected string $prefix = 'grou_';
     protected $primaryKey = 'grou_id';
-
+    
+    protected $fillable = [
+        'instructor_user_id',
+        'sess_id'
+    ];
     public function instructor() {
         return $this->belongsTo(User::class, 'instructor_user_id', 'user_id');
     }
