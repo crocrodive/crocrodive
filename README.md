@@ -21,5 +21,6 @@ To install the project, follow these steps:
 ## Usage
 To run the project in dev mode, use the following command:
 ```bash
+cd backend
 ./bin/dev.sh
 ```
